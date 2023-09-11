@@ -25,25 +25,25 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
 
-# In[3]:
+# In[8]:
 
 
 df = pd.read_csv('train.csv')
 
 
-# In[4]:
+# In[9]:
 
 
 df.head()
 
 
-# In[5]:
+# In[10]:
 
 
 df.tail()
 
 
-# In[6]:
+# In[11]:
 
 
 df.info()
@@ -51,101 +51,101 @@ df.info()
 
 # ### I. Exploratory Detail Analysis
 
-# In[7]:
+# In[12]:
 
 
 df.isnull().sum()
 
 
-# In[8]:
+# In[13]:
 
 
 (df.isnull().sum()/df.shape[0]) * 100
 
 
-# In[9]:
+# In[14]:
 
 
 df.describe()
 
 
-# In[10]:
+# In[15]:
 
 
 print(df['Airline'].unique())
 df['Airline'].value_counts()
 
 
-# In[11]:
+# In[16]:
 
 
 df['Departure_City'].unique()
 
 
-# In[12]:
+# In[17]:
 
 
 df['Arrival_City'].unique()
 
 
-# In[13]:
+# In[18]:
 
 
 df['Distance'].unique()
 
 
-# In[14]:
+# In[19]:
 
 
 df['Aircraft_Type'].unique()
 
 
-# In[15]:
+# In[20]:
 
 
 df['Day_of_Week'].unique()
 
 
-# In[16]:
+# In[21]:
 
 
 df['Month_of_Travel'].unique()
 
 
-# In[17]:
+# In[22]:
 
 
 print(df['Demand'].value_counts())
 df['Demand'].unique()
 
 
-# In[18]:
+# In[23]:
 
 
 print(df['Weather_Conditions'].value_counts())
 df['Weather_Conditions'].unique()
 
 
-# In[19]:
+# In[24]:
 
 
 print(df['Promotion_Type'].value_counts())
 df['Promotion_Type'].unique()
 
 
-# In[20]:
+# In[25]:
 
 
 df['Holiday_Season'].unique()
 
 
-# In[21]:
+# In[26]:
 
 
 print(df['Fuel_Price'].unique())
 
 
-# In[22]:
+# In[27]:
 
 
 df['Number_of_Stops'].unique()
@@ -153,13 +153,13 @@ df['Number_of_Stops'].unique()
 
 # ### II. Treating Missing Values
 
-# In[23]:
+# In[28]:
 
 
 df.isnull().sum()
 
 
-# In[24]:
+# In[29]:
 
 
 df['Airline'] = df['Airline'].fillna('Unknown')
@@ -171,21 +171,21 @@ df['Weather_Conditions'] = df['Weather_Conditions'].fillna(df['Weather_Condition
 df['Promotion_Type'] = df['Promotion_Type'].fillna(df['Promotion_Type'].mode()[0])
 
 
-# In[25]:
+# In[30]:
 
 
 df['Departure_City'] = df['Departure_City'].fillna('Unknown')
 df['Arrival_City'] = df['Arrival_City'].fillna('Unknown')
 
 
-# In[26]:
+# In[31]:
 
 
 df['Distance'] = df['Distance'].fillna(round(df['Distance'].median(),1))
 df['Fuel_Price'] = df['Fuel_Price'].fillna(round(df['Fuel_Price'].median(),2))
 
 
-# In[27]:
+# In[32]:
 
 
 df.isnull().sum()
@@ -193,7 +193,7 @@ df.isnull().sum()
 
 # ### III. Encoding Features
 
-# In[28]:
+# In[33]:
 
 
 Airline_mapper = { 'Airline A': 0, 'Airline B': 1, 'Airline C': 2, 'Unknown': 3}
@@ -214,7 +214,7 @@ PromotionType_mapper = {'Special Offer': 0, 'None': 2, 'Discount': 1}
 HolidaySeason_mapper = {'Summer': 1, 'Spring' :4, 'Fall': 2, 'None': 0, 'Winter': 3}
 
 
-# In[29]:
+# In[34]:
 
 
 df['Promotion_Type'] = df['Promotion_Type'].replace(PromotionType_mapper)
@@ -229,7 +229,7 @@ df['Holiday_Season'] = df['Holiday_Season'].replace(HolidaySeason_mapper)
 
 # ### III. Feature Engineering
 
-# In[30]:
+# In[35]:
 
 
 from datetime import datetime
@@ -237,7 +237,7 @@ df['DepartureHour'] = pd.to_datetime(df['Departure_Time']).dt.hour
 df['DepartureMinute'] = pd.to_datetime(df['Departure_Time']).dt.minute
 
 
-# In[31]:
+# In[36]:
 
 
 from datetime import datetime
@@ -245,38 +245,38 @@ df['ArrivalHour'] = pd.to_datetime(df['Arrival_Time']).dt.hour
 df['ArrivalMinute'] = pd.to_datetime(df['Arrival_Time']).dt.minute
 
 
-# In[32]:
+# In[37]:
 
 
 df['Duration_hour'] = df['Duration'].astype(int)
 df['Duration_Minute'] = round((df['Duration'] - df['Duration'].astype(int))*60,0).astype(int)
 
 
-# In[33]:
+# In[38]:
 
 
 df.info()
 
 
-# In[34]:
+# In[39]:
 
 
 df.head()
 
 
-# In[42]:
+# In[40]:
 
 
 df_final = df.drop(['Flight_ID','Departure_City','Arrival_City','Departure_Time','Arrival_Time'], axis=1)
 
 
-# In[43]:
+# In[41]:
 
 
 df_final.head()
 
 
-# In[44]:
+# In[42]:
 
 
 df_final.info()
@@ -304,7 +304,7 @@ df_final.info()
 
 # ### V. Train and Vlidation Split
 
-# In[45]:
+# In[43]:
 
 
 from sklearn.model_selection import train_test_split
@@ -319,7 +319,7 @@ print(f'Shape of Training DataSet- Y_train {Y_train.shape} and Y_test {Y_test.sh
 
 # ### VI. Linear Regression Model
 
-# In[46]:
+# In[44]:
 
 
 from sklearn.linear_model import LinearRegression
@@ -341,7 +341,7 @@ print(f'MSE for Test Dataset is {metrics.mean_absolute_error(Y_test, y_predict_t
 print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_test, y_predict_test))}')
 
 
-# In[47]:
+# In[45]:
 
 
 pd.DataFrame(zip(linear_regression.coef_.T, X_train.columns))
@@ -349,7 +349,7 @@ pd.DataFrame(zip(linear_regression.coef_.T, X_train.columns))
 
 # ### VI. Ridge Regression Model
 
-# In[48]:
+# In[46]:
 
 
 from sklearn.linear_model import Ridge
@@ -369,7 +369,7 @@ print(f'MSE for Test Dataset is {metrics.mean_absolute_error(Y_test, y_predict_r
 print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_test, y_predict_ridge_test))}')
 
 
-# In[49]:
+# In[47]:
 
 
 pd.DataFrame(zip(ridge_regression.coef_.T, X_train.columns))
@@ -377,7 +377,7 @@ pd.DataFrame(zip(ridge_regression.coef_.T, X_train.columns))
 
 # ### VII. Lasso Regression Model
 
-# In[50]:
+# In[48]:
 
 
 from sklearn.linear_model import Lasso
@@ -399,7 +399,7 @@ print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_tes
 
 # ### VIII ExtraTree Regressor
 
-# In[52]:
+# In[49]:
 
 
 from sklearn.ensemble import ExtraTreesRegressor
@@ -421,7 +421,7 @@ print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_tes
 
 # ### IX. RandomForest Regressor
 
-# In[53]:
+# In[50]:
 
 
 from sklearn.ensemble import RandomForestRegressor
@@ -441,15 +441,35 @@ print(f'MSE for Test Dataset is {metrics.mean_absolute_error(Y_test, y_predict_r
 print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_test, y_predict_randomforest_test))}')
 
 
+# In[51]:
+
+
+from lightgbm import LGBMRegressor
+
+lgbm_regression = LGBMRegressor()
+lgbm_regression.fit(X_train,Y_train)
+
+y_predict_lgbm_train = lgbm_regression.predict(X_train)
+print(f'R2 Score for Training Dataset is {metrics.r2_score(Y_train,y_predict_lgbm_train)}')
+print(f'MSE for Training Dataset is {metrics.mean_absolute_error(Y_train, y_predict_lgbm_train)}')
+print(f'RMSE Score for Training Dataset is {np.sqrt(metrics.mean_squared_error(Y_train, y_predict_lgbm_train))}')
+
+y_predict_lgbm_test = lgbm_regression.predict(X_test)
+
+print(f'\n\nR2 Score for Test Dataset is {metrics.r2_score(Y_test,y_predict_lgbm_test)}')
+print(f'MSE for Test Dataset is {metrics.mean_absolute_error(Y_test, y_predict_lgbm_test)}')
+print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_test, y_predict_lgbm_test))}')
+
+
 # ### X. Voting Regressor
 
-# In[54]:
+# In[52]:
 
 
 from sklearn.ensemble import VotingRegressor
 
 reg_estimator = [('lr',linear_regression),('rid',ridge_regression),('lasso',lasso_regression), ('extra', extratree_regression), 
-                 ('rf', randomforest_regression)]
+                 ('rf', randomforest_regression), ('lgbm', lgbm_regression )]
 
 voting_regressor = VotingRegressor(estimators=reg_estimator)
 voting_regressor.fit(X_train, Y_train)
@@ -473,33 +493,27 @@ print(f'RMSE Score for Test Dataset is {np.sqrt(metrics.mean_squared_error(Y_tes
 
 
 
-# In[ ]:
-
-
-
-
-
 # ## Treating Test data
 
-# In[55]:
+# In[53]:
 
 
 df_test = pd.read_csv('test.csv')
 
 
-# In[56]:
+# In[54]:
 
 
 df_test.head()
 
 
-# In[57]:
+# In[55]:
 
 
 df_test.tail()
 
 
-# In[58]:
+# In[56]:
 
 
 df_test.info()
@@ -507,101 +521,101 @@ df_test.info()
 
 # ### I. Exploratory Detail Analysis
 
-# In[59]:
+# In[57]:
 
 
 df_test.isnull().sum()
 
 
-# In[60]:
+# In[58]:
 
 
 (df_test.isnull().sum()/df_test.shape[0]) * 100
 
 
-# In[61]:
+# In[59]:
 
 
 df_test.describe()
 
 
-# In[62]:
+# In[60]:
 
 
 print(df_test['Airline'].unique())
 df_test['Airline'].value_counts()
 
 
-# In[63]:
+# In[61]:
 
 
 df_test['Departure_City'].unique()
 
 
-# In[64]:
+# In[62]:
 
 
 df_test['Arrival_City'].unique()
 
 
-# In[65]:
+# In[63]:
 
 
 df_test['Distance'].unique()
 
 
-# In[66]:
+# In[64]:
 
 
 df_test['Aircraft_Type'].unique()
 
 
-# In[67]:
+# In[65]:
 
 
 df_test['Day_of_Week'].unique()
 
 
-# In[68]:
+# In[66]:
 
 
 df_test['Month_of_Travel'].unique()
 
 
-# In[69]:
+# In[67]:
 
 
 print(df_test['Demand'].value_counts())
 df_test['Demand'].unique()
 
 
-# In[70]:
+# In[68]:
 
 
 print(df_test['Weather_Conditions'].value_counts())
 df_test['Weather_Conditions'].unique()
 
 
-# In[71]:
+# In[69]:
 
 
 print(df_test['Promotion_Type'].value_counts())
 df_test['Promotion_Type'].unique()
 
 
-# In[72]:
+# In[70]:
 
 
 df_test['Holiday_Season'].unique()
 
 
-# In[73]:
+# In[71]:
 
 
 print(df_test['Fuel_Price'].unique())
 
 
-# In[74]:
+# In[72]:
 
 
 df_test['Number_of_Stops'].unique()
@@ -609,13 +623,13 @@ df_test['Number_of_Stops'].unique()
 
 # ### II. Treating Missing Values
 
-# In[75]:
+# In[73]:
 
 
 df_test.isnull().sum()
 
 
-# In[76]:
+# In[74]:
 
 
 df_test['Airline'] = df_test['Airline'].fillna('Unknown')
@@ -627,21 +641,21 @@ df_test['Weather_Conditions'] = df_test['Weather_Conditions'].fillna(df_test['We
 df_test['Promotion_Type'] = df_test['Promotion_Type'].fillna(df_test['Promotion_Type'].mode()[0])
 
 
-# In[77]:
+# In[75]:
 
 
 df_test['Departure_City'] = df_test['Departure_City'].fillna('Unknown')
 df_test['Arrival_City'] = df_test['Arrival_City'].fillna('Unknown')
 
 
-# In[78]:
+# In[76]:
 
 
 df_test['Distance'] = df_test['Distance'].fillna(round(df_test['Distance'].median(),1))
 df_test['Fuel_Price'] = df_test['Fuel_Price'].fillna(round(df_test['Fuel_Price'].median(),2))
 
 
-# In[79]:
+# In[77]:
 
 
 df_test.isnull().sum()
@@ -649,7 +663,7 @@ df_test.isnull().sum()
 
 # ### III. Encoding Features
 
-# In[80]:
+# In[78]:
 
 
 Airline_mapper = { 'Airline A': 0, 'Airline B': 1, 'Airline C': 2, 'Unknown': 3}
@@ -670,7 +684,7 @@ PromotionType_mapper = {'Special Offer': 0, 'None': 2, 'Discount': 1}
 HolidaySeason_mapper = {'Summer': 1, 'Spring' :4, 'Fall': 2, 'None': 0, 'Winter': 3}
 
 
-# In[81]:
+# In[79]:
 
 
 df_test['Promotion_Type'] = df_test['Promotion_Type'].replace(PromotionType_mapper)
@@ -685,7 +699,7 @@ df_test['Holiday_Season'] = df_test['Holiday_Season'].replace(HolidaySeason_mapp
 
 # ### III. Feature Engineering
 
-# In[82]:
+# In[80]:
 
 
 from datetime import datetime
@@ -693,7 +707,7 @@ df_test['DepartureHour'] = pd.to_datetime(df_test['Departure_Time']).dt.hour
 df_test['DepartureMinute'] = pd.to_datetime(df_test['Departure_Time']).dt.minute
 
 
-# In[83]:
+# In[81]:
 
 
 from datetime import datetime
@@ -701,55 +715,55 @@ df_test['ArrivalHour'] = pd.to_datetime(df_test['Arrival_Time']).dt.hour
 df_test['ArrivalMinute'] = pd.to_datetime(df_test['Arrival_Time']).dt.minute
 
 
-# In[84]:
+# In[82]:
 
 
 df_test['Duration_hour'] = df_test['Duration'].astype(int)
 df_test['Duration_Minute'] = round((df_test['Duration'] - df_test['Duration'].astype(int))*60,0).astype(int)
 
 
-# In[85]:
+# In[83]:
 
 
 df_test.info()
 
 
-# In[86]:
+# In[84]:
 
 
 df_test.head()
 
 
-# In[87]:
+# In[85]:
 
 
 df_test_final = df_test.drop(['Flight_ID','Departure_City','Arrival_City','Departure_Time','Arrival_Time'], axis=1)
 
 
-# In[88]:
+# In[86]:
 
 
 df_test_final.head()
 
 
-# In[89]:
+# In[87]:
 
 
 df_test_final.info()
 
 
-# In[92]:
+# In[88]:
 
 
 X_test_prediction_set = df_test_final
-y_predict_set = randomforest_regression.predict(X_test_prediction_set)
+y_predict_set = lgbm_regression.predict(X_test_prediction_set)
 
 
-# In[97]:
+# In[89]:
 
 
 data = {
-    'ID':list(df_test['Flight_ID']),
+    'Flight_ID':list(df_test['Flight_ID']),
     'Flight_Price':list(y_predict_set)
 }
 
